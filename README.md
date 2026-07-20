@@ -1,4 +1,5 @@
-MediCare Clinic
+
+# MediCare Clinic
 
 A full-stack web app for a medical clinic. Patients can describe their symptoms and get an AI-powered triage response, book appointments, and manage their profile — all from one place. Admins get a separate dashboard to manage appointments and users.
 
@@ -31,12 +32,6 @@ The project is split into three parts: a React frontend, a Node.js/Express backe
 <img width="1851" height="953" alt="Screenshot from 2026-03-05 03-46-54" src="https://github.com/user-attachments/assets/28dcf3cc-df95-438e-8769-c11033725c11" />
 
 *Patient dashboard with appointment stats and quick actions.*
-
-# MediCare Clinic
-
-A full-stack web app for a medical clinic. Patients can describe their symptoms and get an AI-powered triage response, book appointments, and manage their profile — all from one place. Admins get a separate dashboard to manage appointments and users.
-
-The project is split into three parts: a React frontend, a Node.js/Express backend, and a Python AI service that talks to HuggingFace's inference API. MongoDB handles all data storage.
 
 ---
 
