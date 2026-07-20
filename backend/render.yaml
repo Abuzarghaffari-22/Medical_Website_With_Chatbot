@@ -1,0 +1,77 @@
+services:
+  - type: web
+    name: medical-clinic-backend
+    runtime: node
+    region: oregon
+    plan: starter
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRE
+        value: 15m
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_EXPIRE
+        value: 7d
+      - key: INTERNAL_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: AI_SERVICE_URL
+        sync: false
+      - key: AI_SERVICE_TIMEOUT
+        value: 40000
+      - key: CLINIC_PHONE
+        sync: false
+      - key: CLINIC_EMAIL
+        sync: false
+      - key: LOG_LEVEL
+        value: info
+
+  - type: web
+    name: medical-clinic-ai-service
+    runtime: python
+    region: oregon
+    plan: starter
+    rootDir: ai-services
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health/live
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: HF_TOKEN
+        sync: false
+      - key: HF_MODEL
+        value: mistralai/Mistral-7B-Instruct-v0.3
+      - key: HF_MAX_NEW_TOKENS
+        value: 800
+      - key: HF_TEMPERATURE
+        value: 0.3
+      - key: HF_TIMEOUT
+        value: 60
+      - key: INTERNAL_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: TRUSTED_HOSTS
+        sync: false
+      - key: RATE_LIMIT_CHAT_PER_MINUTE
+        value: 10
+      - key: CLINIC_NAME
+        sync: false
+      - key: CLINIC_PHONE
+        sync: false
+      - key: CLINIC_EMAIL
+        sync: false
+      - key: CLINIC_ADDRESS
+        sync: false

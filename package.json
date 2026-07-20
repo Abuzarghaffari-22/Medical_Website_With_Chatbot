@@ -1,0 +1,24 @@
+{
+  "name": "medical-clinic-fullstack",
+  "version": "1.0.0",
+  "description": "AI-Powered Medical Clinic — Full Stack (Node.js + Python FastAPI + React)",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend && pip install -r ai-services/requirements.txt",
+    "dev":            "concurrently --kill-others-on-fail --prefix-colors \"blue,green,magenta\" \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run dev:ai-services\"",
+    "dev:backend":    "npm run dev --prefix backend",
+    "dev:frontend":   "npm run dev --prefix frontend",
+    "dev:ai-services": "cd ai-services && uvicorn app.main:app --reload --port 8000",
+    "build:frontend": "npm run build --prefix frontend",
+    "test:backend":   "npm test --prefix backend",
+    "test:ai":        "cd ai-services && pytest tests/ -v",
+    "seed":           "npm run seed --prefix backend",
+    "seed:destroy":   "npm run seed:destroy --prefix backend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-800 font-sans;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-slate-100; }
+  ::-webkit-scrollbar-thumb { @apply bg-slate-300 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-slate-400; }
+}
+
+@layer components {
+  /* ─── Buttons ─────────────────────────────────────────────────────────────── */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 font-medium rounded-xl
+           transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  }
+  .btn-sm  { @apply btn px-3.5 py-2 text-sm; }
+  .btn-md  { @apply btn px-5 py-2.5 text-sm; }
+  .btn-lg  { @apply btn px-6 py-3 text-base; }
+  .btn-xl  { @apply btn px-8 py-3.5 text-base; }
+
+  .btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800
+           focus-visible:ring-primary-500 shadow-sm hover:shadow-md;
+  }
+  .btn-secondary {
+    @apply bg-white text-slate-700 border border-slate-200
+           hover:bg-slate-50 hover:border-slate-300
+           focus-visible:ring-slate-400 shadow-sm;
+  }
+  .btn-teal {
+    @apply bg-teal-600 text-white hover:bg-teal-700
+           focus-visible:ring-teal-500 shadow-sm;
+  }
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700
+           focus-visible:ring-red-500 shadow-sm;
+  }
+  .btn-ghost {
+    @apply text-slate-600 hover:bg-slate-100 hover:text-slate-800
+           focus-visible:ring-slate-400;
+  }
+
+  /* ─── Cards ───────────────────────────────────────────────────────────────── */
+  .card       { @apply bg-white rounded-2xl border border-slate-100 shadow-card transition-shadow duration-200; }
+  .card-hover { @apply card hover:shadow-card-hover; }
+
+  /* ─── Form Controls ───────────────────────────────────────────────────────── */
+  .input {
+    @apply w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white
+           text-slate-800 placeholder-slate-400 text-sm
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+           transition-all duration-150 disabled:bg-slate-50 disabled:cursor-not-allowed;
+  }
+  .input-error { @apply border-red-400 focus:ring-red-400; }
+
+  .label     { @apply block text-sm font-medium text-slate-700 mb-1.5; }
+  .error-msg { @apply text-xs text-red-500 mt-1 flex items-center gap-1; }
+
+  /* ─── Badges ──────────────────────────────────────────────────────────────── */
+  .badge        { @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium; }
+  .badge-blue   { @apply badge bg-primary-50 text-primary-700; }
+  .badge-teal   { @apply badge bg-teal-50 text-teal-700; }
+  .badge-green  { @apply badge bg-emerald-50 text-emerald-700; }
+  .badge-yellow { @apply badge bg-amber-50 text-amber-700; }
+  .badge-red    { @apply badge bg-red-50 text-red-700; }
+  .badge-slate  { @apply badge bg-slate-100 text-slate-600; }
+
+  /* ─── Skeleton Loader ─────────────────────────────────────────────────────── */
+  .skeleton {
+    @apply bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200
+           bg-[length:200%_100%] animate-shimmer rounded-lg;
+  }
+
+  /* ─── Sidebar ─────────────────────────────────────────────────────────────── */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium
+           transition-all duration-150 cursor-pointer;
+  }
+  .sidebar-link-active   { @apply sidebar-link bg-primary-50 text-primary-700; }
+  .sidebar-link-inactive { @apply sidebar-link text-slate-600 hover:bg-slate-50 hover:text-slate-800; }
+
+  /* ─── Chat Bubbles ────────────────────────────────────────────────────────── */
+  .chat-bubble-user {
+    @apply bg-primary-600 text-white rounded-2xl rounded-tr-sm px-4 py-3 max-w-[78%]
+           text-sm leading-relaxed shadow-sm;
+  }
+  .chat-bubble-ai {
+    @apply bg-white border border-slate-100 text-slate-800 rounded-2xl rounded-tl-sm
+           px-4 py-3 max-w-[82%] text-sm leading-relaxed shadow-sm;
+  }
+
+  /* ─── Page Structure ──────────────────────────────────────────────────────── */
+  .page-container { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+  .section-title  { @apply text-2xl sm:text-3xl font-display font-semibold text-slate-900; }
+}
+
+@layer utilities {
+  .text-balance  { text-wrap: balance; }
+  .glass         { @apply bg-white/80 backdrop-blur-md; }
+  .gradient-text { @apply bg-gradient-to-r from-primary-600 to-teal-500 bg-clip-text text-transparent; }
+}
+
+/* ─── Typing indicator dots ──────────────────────────────────────────────── */
+@keyframes bounceDot {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+  40%           { transform: scale(1); opacity: 1; }
+}
+
+.typing-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #94a3b8;
+  animation: bounceDot 1.4s infinite ease-in-out both;
+}
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+.typing-dot:nth-child(3) { animation-delay: 0s; }
+
+/* ─── Emergency urgency banner ───────────────────────────────────────────── */
+@keyframes urgencyPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+.urgency-emergency { animation: urgencyPulse 1.5s ease-in-out infinite; }

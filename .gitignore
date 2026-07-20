@@ -1,0 +1,38 @@
+# Root monorepo ignores
+node_modules/
+
+# Environment files — NEVER commit real secrets
+.env
+.env.local
+.env.*.local
+*/.env
+*/.env.local
+backend/.env
+ai-services/.env
+frontend/.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Docker override
+docker-compose.override.yml
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Logs
+logs/
+*.log

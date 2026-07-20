@@ -1,0 +1,134 @@
+version: '3.9'
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MediCare Clinic — Full Stack Docker Compose
+#
+# Usage:
+#   cp backend/.env.example backend/.env          # fill in secrets
+#   cp ai-services/.env.example ai-services/.env  # fill in HF_TOKEN
+#   cp frontend/.env.example frontend/.env        # optional
+#   docker-compose up --build
+#
+# Services:
+#   mongo      → localhost:27017
+#   backend    → localhost:5000
+#   ai-service → localhost:8000
+#   frontend   → localhost:5173
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ─── MongoDB ───────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7.0
+    container_name: medicare_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: medical-clinic
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks:
+      - medicare_net
+
+  # ─── Node.js Backend ───────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: medicare_backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      MONGODB_URI: mongodb://mongo:27017/medical-clinic
+      AI_SERVICE_URL: http://ai-service:8000
+    depends_on:
+      mongo:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - /app/node_modules  # preserve container node_modules
+      - backend_logs:/app/logs
+    command: npm run dev
+    networks:
+      - medicare_net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ─── Python AI Service ─────────────────────────────────────────────────────
+  ai-service:
+    build:
+      context: ./ai-services
+      dockerfile: Dockerfile
+    container_name: medicare_ai
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./ai-services/.env
+    environment:
+      ENVIRONMENT: development
+    depends_on:
+      backend:
+        condition: service_healthy
+    volumes:
+      - ./ai-services:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - medicare_net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8000/api/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  # ─── React Frontend (dev mode via Vite) ────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: medicare_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./frontend/.env
+    environment:
+      VITE_API_URL: http://localhost:5000
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0
+    networks:
+      - medicare_net
+
+# ─── Volumes ──────────────────────────────────────────────────────────────────
+volumes:
+  mongo_data:
+    driver: local
+  backend_logs:
+    driver: local
+
+# ─── Network ──────────────────────────────────────────────────────────────────
+networks:
+  medicare_net:
+    driver: bridge

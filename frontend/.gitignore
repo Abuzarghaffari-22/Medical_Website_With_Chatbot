@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+
+# Environment — NEVER commit real secrets
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+
+# Vite cache
+.vite/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
