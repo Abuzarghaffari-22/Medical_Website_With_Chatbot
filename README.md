@@ -6,17 +6,32 @@ The project is split into three parts: a React frontend, a Node.js/Express backe
 
 <img width="1853" height="963" alt="Screenshot from 2026-03-04 23-58-29" src="https://github.com/user-attachments/assets/be976b0f-b250-49d5-9d03-77b7f6911782" />
 
+*Landing page showcasing the AI-powered healthcare platform.*
+
 <img width="1853" height="966" alt="Screenshot from 2026-03-05 00-10-50" src="https://github.com/user-attachments/assets/cc8d09b3-82c3-4a98-a63c-86d9b743318c" />
+
+*Secure sign-in page for the patient portal.*
 
 <img width="1860" height="897" alt="Screenshot from 2026-03-04 23-58-53" src="https://github.com/user-attachments/assets/4d796123-c586-42f8-81ee-f2ea1a1a93b9" />
 
+*Platform features — AI health assistant, appointment booking, secure portal, and more.*
+
 <img width="1855" height="861" alt="Screenshot from 2026-03-04 23-59-19" src="https://github.com/user-attachments/assets/8cad7747-d786-41a4-a57a-506aa85cec6d" />
+
+*Specialist departments overview with a call-to-action to create an account.*
 
 <img width="1856" height="356" alt="Screenshot from 2026-03-04 23-59-33" src="https://github.com/user-attachments/assets/ff04c1c7-66ee-4976-a345-e7fd4d90e4ca" />
 
+*Footer with clinic contact details, quick links, and emergency notice.*
+
 <img width="1851" height="953" alt="Screenshot from 2026-03-05 03-48-24" src="https://github.com/user-attachments/assets/e5b55240-94e2-4537-bdec-f300175409a8" />
 
+*AI Assistant chat guiding a patient through symptom triage.*
+
 <img width="1851" height="953" alt="Screenshot from 2026-03-05 03-46-54" src="https://github.com/user-attachments/assets/28dcf3cc-df95-438e-8769-c11033725c11" />
+
+*Patient dashboard with appointment stats and quick actions.*
+
 # MediCare Clinic
 
 A full-stack web app for a medical clinic. Patients can describe their symptoms and get an AI-powered triage response, book appointments, and manage their profile — all from one place. Admins get a separate dashboard to manage appointments and users.
