@@ -143,12 +143,6 @@ VITE_API_URL=http://localhost:5000
 cd backend && npm run seed
 ```
 
-This creates two accounts for testing:
-- Admin: admin@medicareclinic.com / Admin@123456
-- Patient: john@example.com / Patient@123
-
----
-
 ## Tests
 
 ```bash
